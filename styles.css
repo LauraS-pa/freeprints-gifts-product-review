@@ -125,6 +125,7 @@ a {
 .product:nth-child(4) { animation-delay: 160ms; }
 .product:nth-child(5) { animation-delay: 200ms; }
 .product:nth-child(6) { animation-delay: 240ms; }
+.product:nth-child(7) { animation-delay: 280ms; }
 
 .product--alt {
   background: linear-gradient(
