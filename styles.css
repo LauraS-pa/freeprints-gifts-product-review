@@ -204,8 +204,9 @@ a {
 
 .product-photo {
   margin: 0;
-  max-width: 260px;
+  max-width: 280px;
   width: 100%;
+  justify-self: start;
 }
 
 .product-photo__frame {
@@ -249,20 +250,22 @@ a {
 
 .product__grid {
   display: grid;
-  grid-template-columns: minmax(160px, 200px) minmax(220px, 260px) minmax(0, 1fr);
+  grid-template-columns: minmax(160px, 1fr) minmax(220px, 280px);
   grid-template-areas:
-    "shipping photo pnl"
-    "comps comps comps";
+    "shipping photo"
+    "pnl pnl"
+    "comps comps";
   gap: 1.75rem 1.5rem;
   align-items: start;
 }
 
 .product__grid--with-sales {
-  grid-template-columns: minmax(160px, 200px) minmax(220px, 260px) minmax(0, 1fr);
+  grid-template-columns: minmax(160px, 1fr) minmax(220px, 280px);
   grid-template-areas:
-    "shipping photo pnl"
-    "sales sales sales"
-    "comps comps comps";
+    "shipping photo"
+    "pnl pnl"
+    "sales sales"
+    "comps comps";
 }
 
 .shipping { grid-area: shipping; }
@@ -624,24 +627,11 @@ a {
 
 @media (max-width: 900px) {
   .product__grid {
-    grid-template-columns: minmax(140px, 180px) minmax(200px, 240px);
-    grid-template-areas:
-      "shipping photo"
-      "pnl pnl"
-      "comps comps";
-  }
-
-  .product__grid--with-sales {
-    grid-template-areas:
-      "shipping photo"
-      "pnl pnl"
-      "sales sales"
-      "comps comps";
+    grid-template-columns: minmax(140px, 1fr) minmax(200px, 240px);
   }
 
   .product-photo {
     max-width: 240px;
-    justify-self: start;
   }
 
   .sales__stats {
