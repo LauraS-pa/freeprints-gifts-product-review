@@ -259,53 +259,10 @@ a {
   align-items: start;
 }
 
-.product__grid--with-sales {
-  grid-template-columns: minmax(160px, 1fr) minmax(220px, 280px);
-  grid-template-areas:
-    "shipping photo"
-    "pnl pnl"
-    "sales sales"
-    "comps comps";
-}
-
 .shipping { grid-area: shipping; }
 .product-photo { grid-area: photo; }
-.sales { grid-area: sales; }
 .pnl { grid-area: pnl; margin: 0; }
 .comps { grid-area: comps; }
-
-.sales__stats {
-  margin: 0;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.85rem;
-}
-
-.sales__stat {
-  padding: 0.95rem 1rem 1.05rem;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-}
-
-.sales__stat dt {
-  margin: 0;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-.sales__stat dd {
-  margin: 0.35rem 0 0;
-  font-family: var(--font-display);
-  font-size: clamp(1.45rem, 2.4vw, 1.85rem);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--shipping);
-  line-height: 1.1;
-}
 
 .shipping__price {
   margin: 0;
@@ -634,10 +591,6 @@ a {
     max-width: 240px;
   }
 
-  .sales__stats {
-    grid-template-columns: 1fr;
-  }
-
   .comps__list {
     grid-template-columns: 1fr;
   }
@@ -661,22 +614,12 @@ a {
     padding: 2.5rem 1rem 3rem;
   }
 
-  .product__grid,
-  .product__grid--with-sales {
+  .product__grid {
     grid-template-columns: 1fr;
     grid-template-areas:
       "shipping"
       "photo"
       "pnl"
-      "comps";
-  }
-
-  .product__grid--with-sales {
-    grid-template-areas:
-      "shipping"
-      "photo"
-      "pnl"
-      "sales"
       "comps";
   }
 
