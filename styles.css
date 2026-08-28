@@ -39,6 +39,10 @@ body {
   background-attachment: fixed;
 }
 
+body.lightbox-open {
+  overflow: hidden;
+}
+
 img {
   max-width: 100%;
   display: block;
@@ -46,6 +50,10 @@ img {
 
 a {
   color: inherit;
+}
+
+button {
+  font: inherit;
 }
 
 /* ——— Header ——— */
@@ -146,15 +154,6 @@ a {
   border-bottom: 2px solid var(--accent);
 }
 
-.product__index {
-  margin: 0 0 0.4rem;
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--accent);
-}
-
 .product__title {
   margin: 0;
   font-family: var(--font-display);
@@ -206,7 +205,7 @@ a {
   margin: 0;
   max-width: 280px;
   width: 100%;
-  justify-self: start;
+  justify-self: end;
 }
 
 .product-photo__frame {
@@ -224,11 +223,33 @@ a {
   overflow: hidden;
 }
 
+.product-photo__zoom {
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+  border-radius: calc(var(--radius) - 2px);
+}
+
+.product-photo__zoom:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
 .product-photo__image {
   width: 100%;
   height: 100%;
   object-fit: contain;
   object-position: center;
+  transition: transform 180ms ease;
+}
+
+.product-photo__zoom:hover .product-photo__image {
+  transform: scale(1.03);
 }
 
 .product-photo .placeholder-media {
@@ -250,19 +271,44 @@ a {
 
 .product__grid {
   display: grid;
-  grid-template-columns: minmax(160px, 1fr) minmax(220px, 280px);
+  grid-template-columns: minmax(140px, 0.9fr) minmax(160px, 1.2fr) minmax(200px, 260px);
   grid-template-areas:
-    "shipping photo"
-    "pnl pnl"
-    "comps comps";
-  gap: 1.75rem 1.5rem;
+    "shipping notes photo"
+    "pnl pnl pnl"
+    "comps comps comps";
+  gap: 1.75rem 1.25rem;
   align-items: start;
 }
 
+.product__grid--with-sales {
+  grid-template-areas:
+    "shipping notes photo"
+    "pnl pnl pnl"
+    "sales sales sales"
+    "comps comps comps";
+}
+
 .shipping { grid-area: shipping; }
+.product-notes { grid-area: notes; }
 .product-photo { grid-area: photo; }
+.sales { grid-area: sales; }
 .pnl { grid-area: pnl; margin: 0; }
 .comps { grid-area: comps; }
+
+.product-notes__body {
+  min-height: 3.25rem;
+  padding: 0.7rem 0.85rem;
+  border: 1.5px dashed rgba(26, 111, 181, 0.28);
+  border-radius: var(--radius);
+  background: rgba(248, 251, 254, 0.65);
+}
+
+.product-notes__placeholder {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+  font-style: italic;
+}
 
 .shipping__price {
   margin: 0;
@@ -312,6 +358,39 @@ a {
   color: var(--muted);
 }
 
+.sales__stats {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.sales__stat {
+  padding: 0.95rem 1rem 1.05rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.sales__stat dt {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.sales__stat dd {
+  margin: 0.35rem 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 2.4vw, 1.85rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--shipping);
+  line-height: 1.1;
+}
+
 /* ——— P&L placeholder ——— */
 
 .placeholder-media {
@@ -353,9 +432,6 @@ a {
   color: var(--muted);
 }
 
-/* When you have a real image, swap the placeholder div for:
-   <img class="pnl__image" src="images/key-caddy-pnl.png" alt="Key Caddy P&L" />
-*/
 .pnl__image {
   width: 100%;
   border-radius: var(--radius);
@@ -475,6 +551,11 @@ a {
   color: var(--accent-deep);
 }
 
+.planning-note {
+  background: rgba(227, 235, 244, 0.75);
+  border-left-color: var(--accent-deep);
+}
+
 .comp-card {
   display: grid;
   grid-template-rows: 140px auto;
@@ -538,6 +619,59 @@ a {
   color: var(--muted);
 }
 
+/* ——— Lightbox ——— */
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgba(18, 32, 51, 0.78);
+  backdrop-filter: blur(4px);
+  cursor: zoom-out;
+}
+
+.lightbox[hidden] {
+  display: none;
+}
+
+.lightbox__image {
+  max-width: min(920px, 94vw);
+  max-height: 88vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  cursor: default;
+}
+
+.lightbox__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  background: rgba(15, 79, 134, 0.9);
+  color: #fff;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.lightbox__close:hover,
+.lightbox__close:focus-visible {
+  background: var(--accent);
+  outline: none;
+}
+
 /* ——— Footer ——— */
 
 .site-footer {
@@ -574,7 +708,8 @@ a {
   .product,
   .placeholder-media,
   .comp-card,
-  .jump-nav a {
+  .jump-nav a,
+  .product-photo__image {
     animation: none !important;
     transition: none !important;
   }
@@ -583,12 +718,17 @@ a {
 /* ——— Responsive ——— */
 
 @media (max-width: 900px) {
-  .product__grid {
-    grid-template-columns: minmax(140px, 1fr) minmax(200px, 240px);
+  .product__grid,
+  .product__grid--with-sales {
+    grid-template-columns: minmax(120px, 1fr) minmax(140px, 1.1fr) minmax(180px, 220px);
   }
 
   .product-photo {
-    max-width: 240px;
+    max-width: 220px;
+  }
+
+  .sales__stats {
+    grid-template-columns: 1fr;
   }
 
   .comps__list {
@@ -605,6 +745,34 @@ a {
   }
 }
 
+@media (max-width: 720px) {
+  .product__grid,
+  .product__grid--with-sales {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "shipping"
+      "notes"
+      "photo"
+      "pnl"
+      "comps";
+  }
+
+  .product__grid--with-sales {
+    grid-template-areas:
+      "shipping"
+      "notes"
+      "photo"
+      "pnl"
+      "sales"
+      "comps";
+  }
+
+  .product-photo {
+    max-width: 240px;
+    justify-self: start;
+  }
+}
+
 @media (max-width: 640px) {
   .site-header__inner {
     padding: 0.9rem 1rem;
@@ -612,20 +780,6 @@ a {
 
   .product {
     padding: 2.5rem 1rem 3rem;
-  }
-
-  .product__grid {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "shipping"
-      "photo"
-      "pnl"
-      "comps";
-  }
-
-  .product-photo {
-    max-width: 240px;
-    justify-self: start;
   }
 
   .jump-nav {
