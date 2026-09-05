@@ -4,7 +4,7 @@
   if (!toggle || !panel) return;
 
   const label = toggle.querySelector(".dev-zone__toggle-label");
-  const nonViableIds = ["key-caddy", "acrylic-frame", "lunch-bag"];
+  const nonViableIds = ["mug-11oz", "key-caddy", "acrylic-frame", "lunch-bag"];
 
   function setExpanded(expanded) {
     toggle.setAttribute("aria-expanded", expanded ? "true" : "false");
