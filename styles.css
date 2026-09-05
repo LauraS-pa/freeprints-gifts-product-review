@@ -143,6 +143,10 @@ button {
   padding: 2.75rem 1.5rem 1.25rem;
 }
 
+.dev-zone:not(:has(.dev-zone__products:not([hidden]))) {
+  padding-bottom: 0.5rem;
+}
+
 .dev-zone__banner-inner {
   max-width: var(--max);
   margin: 0 auto;
@@ -161,6 +165,55 @@ button {
   letter-spacing: -0.02em;
   line-height: 1.2;
   color: var(--dev-accent-deep);
+}
+
+.dev-zone__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: 1rem;
+  padding: 0.55rem 0.85rem 0.55rem 0.65rem;
+  border: 1px solid var(--dev-line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.55);
+  color: var(--dev-accent-deep);
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease;
+}
+
+.dev-zone__toggle:hover,
+.dev-zone__toggle:focus-visible {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: var(--dev-accent);
+  color: var(--dev-accent);
+  outline: none;
+}
+
+.dev-zone__toggle:focus-visible {
+  box-shadow: 0 0 0 3px rgba(138, 85, 94, 0.28);
+}
+
+.dev-zone__toggle-chevron {
+  flex-shrink: 0;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform 200ms ease;
+}
+
+.dev-zone__toggle[aria-expanded="true"] .dev-zone__toggle-chevron {
+  transform: rotate(45deg);
+}
+
+.dev-zone__products[hidden] {
+  display: none;
 }
 
 .dev-zone .product {

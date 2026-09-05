@@ -473,8 +473,24 @@
             <h2 id="dev-zone-heading" class="dev-zone__title">
               In Development - Not viable at this time
             </h2>
+            <button
+              type="button"
+              class="dev-zone__toggle"
+              id="dev-zone-toggle"
+              aria-expanded="false"
+              aria-controls="dev-zone-products"
+            >
+              <span class="dev-zone__toggle-chevron" aria-hidden="true"></span>
+              <span class="dev-zone__toggle-label">Show non-viable products</span>
+            </button>
           </div>
         </div>
+
+        <div
+          class="dev-zone__products"
+          id="dev-zone-products"
+          hidden
+        >
 
       <!-- Key Caddy -->
       <section class="product" id="key-caddy">
@@ -960,6 +976,7 @@
           </div>
         </div>
       </section>
+        </div>
       </section>
     </main>
 
@@ -968,5 +985,6 @@
     </footer>
 
     <script src="lightbox.js" defer></script>
+    <script src="collapsible.js" defer></script>
   </body>
 </html>
