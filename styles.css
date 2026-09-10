@@ -307,6 +307,23 @@ main > .product:nth-child(4) { animation-delay: 160ms; }
   color: var(--ink-soft);
 }
 
+.product-notes__option {
+  margin: 0.85rem 0 0;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.product-notes__option strong {
+  display: block;
+  margin-bottom: 0.2rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent-deep);
+}
+
 .product-notes__placeholder {
   margin: 0;
   font-size: 0.9rem;
