@@ -711,6 +711,22 @@ main > .product:nth-child(4) { animation-delay: 160ms; }
   margin: 0;
 }
 
+.site-footer__edit {
+  margin-top: 0.5rem !important;
+}
+
+.site-footer__edit a {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.site-footer__edit a:hover,
+.site-footer__edit a:focus-visible {
+  text-decoration: underline;
+  outline: none;
+}
+
 /* ——— Motion ——— */
 
 @keyframes rise-in {
